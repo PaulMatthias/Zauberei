@@ -108,7 +108,7 @@ img{overflow:hidden
     <input type="button" value ="+" onclick="zoom(1.1)"/>
     </p>
        <div style="overflow:scroll; height:500px; width: 500px">
-  <img id="pic_zoom" src="cat3.jpeg"></div>
+  <img id="pic_zoom" src="cat3.jpg"></div>
     </td>
     
     <td>
