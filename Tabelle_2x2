@@ -4,7 +4,16 @@
 
 <script type="text/javascript">
 function zoom(zm,img_id) {
-  // zoom function for zoom buttons
+ var counter;
+ var picListArray= ["picList1", "picList2", "picList3", "picList4"];
+ counterArray=[0,0,0,0];
+ //Array for resetting size onchange
+ if (zm == 0.9){
+ counterArray[img_id] = counterArray[img_id] - 1;
+ } else {
+ counterArray[img_id] = counterArray[img_id] + 1;
+ }
+// zoom function for zoom buttons
   img=document.getElementById(img_id)
   wid=img.width
   ht=img.height
@@ -15,12 +24,12 @@ function zoom(zm,img_id) {
 
 <script type="text/javascript"> 
 // function for select different images and load them onchange
- imageArray = new Array("cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"); 
- altArray = new Array("Katze1", "Katze2", "Katze3", "Katze4"); 
- function changePic(pic, select) { 
+ imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
+ altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
+ function changePic(img_id, select) { 
  var sel= document.getElementById(select);
  var Index = sel.options[sel.selectedIndex].value; 
- var temp = document.getElementById(pic);
+ var temp = document.getElementById(img_id);
  temp.src = imageArray[Index]; 
  temp.alt = altArray[Index]; 
  }
@@ -29,38 +38,28 @@ function zoom(zm,img_id) {
 <style type="text/css">
 html,body
 {
-  margin:0;
+  margin:10px;
   padding:0;
   height:100%;
   border:0;
 }
-table{}
-.fixed { table-layout:fixed; width:"100px"}
+table{
+table-layout:fixed;
+width:100%;
+}
 .fixed td { overflow: hidden; }
 </style>
 
-<style>td{}
-.flow img {
-    position: absolute;
-}
-</style>  
-
-<style>div{}
-.scroll {
-    width: 100%;
-    height: 100%;
-    overflow: scroll;
+<style type="text/css">
+div{}
+.picture{
+overflow:scroll;
+height:500px;
+width:100%;
 }
 </style>
 
-<style type="text/css">
-img{overflow:hidden
-  }
-  .size{
-  width:500px;
-  height:500px;
-  }
-</style></head>
+</head>
 
 <body>
 <table border="1" class="fixed">
@@ -72,19 +71,18 @@ img{overflow:hidden
 <tr> 
   <td>  
      <form id="img" name="img">
-    <p>Zauberspruch 1
+     <p>Zauberspruch 1
       <input type="button" value ="-" onclick="zoom(0.9,'pic1')"/>
       <input type="button" value ="+" onclick="zoom(1.1,'pic1')"/>
- 
-      <select id="picList1" onChange="changePic('pic1','picList1')" name="picList1" >
-        <option value="0">cat1</option>
+       <select id="picList1" onChange="changePic('pic1','picList1')" name="picList1" >
+        <option selected="selected" value="0">cat1</option>
         <option value="1">cat2</option>
         <option value="2">cat3</option>
         <option value="3">cat4</option>
       </select>
       </form>
     </p>
-    <div style="overflow:scroll; height:500px; width: 500px">
+    <div class="picture">
     <img id="pic1" alt="Katze1" name="pic1" src="cat1.jpg"></div>
   </td>
   
@@ -95,13 +93,13 @@ img{overflow:hidden
       <input type="button" value ="+" onclick="zoom(1.1,'pic2')"/>
       <select id="picList2" onchange="changePic('pic2','picList2')" name="picList2">
         <option value="0">cat1</option>
-        <option value="1">cat2</option>
+        <option selected="selected" value="1">cat2</option>
         <option value="2">cat3</option>
         <option value="3">cat4</option>
       </select>
      </form>
     </p>
-    <div style="overflow:scroll;  height:500px; width: 500px">
+    <div class="picture">
     <img id="pic2" alt="Katze2" name="pic2" src="cat2.jpg"></div>
   </td>
 </tr>
@@ -114,11 +112,11 @@ img{overflow:hidden
         <select id="picList3" onchange="changePic('pic3','picList3')" name="picList3">
         <option value="0">cat1</option>
         <option value="1">cat2</option>
-        <option value="2">cat3</option>
+        <option selected="selected" value="2">cat3</option>
         <option value="3">cat4</option>
       </select>
     </p>
-    <div style="overflow:scroll; height:500px; width: 500px">
+    <div class="picture">
     <img id="pic3" src="cat3.jpeg"></div>
   </td>
     
@@ -130,10 +128,10 @@ img{overflow:hidden
         <option value="0">cat1</option>
         <option value="1">cat2</option>
         <option value="2">cat3</option>
-        <option value="3">cat4</option>
+        <option selected="selected" value="3">cat4</option>
       </select>
     </p>
-    <div style="overflow:scroll;  height:500px; width: 500px">
+    <div class="picture">
     <img id="pic4" src="cat4.jpg"></div>
   </td>
 </tr>
