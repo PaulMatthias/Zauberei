@@ -24,7 +24,7 @@ function zoom(zm,img_id) {
 
 <script type="text/javascript"> 
 // function for select different images and load them onchange
- imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
+ imageArray = ["cat1.png", "cat2.png", "cat3.png", "cat4.png"]; 
  altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
  function changePic(img_id, select) { 
  var sel= document.getElementById(select);
@@ -38,7 +38,8 @@ function zoom(zm,img_id) {
 <style type="text/css">
 html,body
 {
-  margin:10px;
+  margin:5px;
+  margin-left:0px;
   padding:0;
   height:100%;
   border:0;
@@ -71,8 +72,8 @@ width:100%;
 <tr> 
   <td>  
      <form id="img" name="img">
-     <p>Zauberspruch 1
-      <input type="button" value ="-" onclick="zoom(0.9,'pic1')"/>
+     <p>
+      <input type="button" value ="--" onclick="zoom(0.9,'pic1')"/>
       <input type="button" value ="+" onclick="zoom(1.1,'pic1')"/>
        <select id="picList1" onChange="changePic('pic1','picList1')" name="picList1" >
         <option selected="selected" value="0">cat1</option>
@@ -81,15 +82,15 @@ width:100%;
         <option value="3">cat4</option>
       </select>
       </form>
-    </p>
+    
     <div class="picture">
-    <img id="pic1" alt="Katze1" name="pic1" src="cat1.jpg"></div>
+    <img id="pic1" alt="Katze1" name="pic1" src="cat1.png"></div></p>
   </td>
   
   <td>
   <form id="img1" name="img1">
-    <p>Zauberspruch 2
-      <input type="button" value ="-" onclick="zoom(0.9,'pic2')"/>
+    <p>
+      <input type="button" value ="--" onclick="zoom(0.9,'pic2')"/>
       <input type="button" value ="+" onclick="zoom(1.1,'pic2')"/>
       <select id="picList2" onchange="changePic('pic2','picList2')" name="picList2">
         <option value="0">cat1</option>
@@ -100,14 +101,14 @@ width:100%;
      </form>
     </p>
     <div class="picture">
-    <img id="pic2" alt="Katze2" name="pic2" src="cat2.jpg"></div>
+    <img id="pic2" alt="Katze2" name="pic2" src="cat2.png"></div>
   </td>
 </tr>
 
 <tr> 
   <td>
-    <p>Zauberspruch 3    
-      <input type="button" value ="-" onclick="zoom(0.9,'pic3')"/>
+    <p>  
+      <input type="button" value ="--" onclick="zoom(0.9,'pic3')"/>
       <input type="button" value ="+" onclick="zoom(1.1,'pic3')"/>
         <select id="picList3" onchange="changePic('pic3','picList3')" name="picList3">
         <option value="0">cat1</option>
@@ -117,12 +118,12 @@ width:100%;
       </select>
     </p>
     <div class="picture">
-    <img id="pic3" src="cat3.jpeg"></div>
+    <img id="pic3" src="cat3.png"></div>
   </td>
     
   <td>
-    <p>Zauberspruch 4
-      <input type="button" value ="-" onclick="zoom(0.9,'pic4')"/>
+    <p>
+      <input type="button" value ="--" onclick="zoom(0.9,'pic4')"/>
       <input type="button" value ="+" onclick="zoom(1.1,'pic4')"/>
         <select id="picList4" onchange="changePic('pic4','picList4')" name="picList4">
         <option value="0">cat1</option>
@@ -132,7 +133,7 @@ width:100%;
       </select>
     </p>
     <div class="picture">
-    <img id="pic4" src="cat4.jpg"></div>
+    <img id="pic4" src="cat4.png"></div>
   </td>
 </tr>
 
