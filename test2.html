@@ -5,6 +5,8 @@
 <script type="text/javascript">
 
 var counterArray= [[0,0,0,0],[0,0,0,0]];    //Array for resetting size onchange
+var tmp=1, tmp2=1;
+
 function zoom(zm,img_id,num) {
  var counter;
  //var picListArray= ["picList1", "picList2", "picList3", "picList4"];
@@ -13,11 +15,17 @@ function zoom(zm,img_id,num) {
  if (zm == 0.9){
  counterArray[num][0] = counterArray[num][0] + 1;
   } 
-  else {
+  else if (zm==1.1){
  counterArray[num][1] = counterArray[num][1] + 1;
  }
+ else{
+ tmp=tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1]);
+ zm=zm/tmp;
+ tmp=zm*tmp;
+ counterArray=[[0,0,0,0],[0,0,0,0]];
+ }
  
- document.getElementById("zoomfactor").innerHTML = Math.round(Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+" % zoom";
+ document.getElementById("zoomfactor").innerHTML = Math.round(tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+"%" ;
 
  // zoom function for zoom buttons
   img=document.getElementById(img_id)
@@ -25,10 +33,6 @@ function zoom(zm,img_id,num) {
   ht=img.height
   img.style.width=(wid*zm)+"px"
   img.style.height=(ht*zm)+"px"
-}
-
-function zoom_onload(){
- document.getElementById("zoomfactor").innerHTML =Math.round(Math.pow(0.9,counterArray[0][0])*Math.pow(1.1,counterArray[0][1])*100)+" % zoom";
 }
 </script>
 
@@ -54,13 +58,24 @@ function getSize(){
 // function for select different images and load them onchange
  imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
  altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
- function changePic(img_id, select) { 
+ function changePic(img_id, select, num) { 
  var sel= document.getElementById(select);
  var Index = sel.options[sel.selectedIndex].value; 
  var temp = document.getElementById(img_id);
+
+ zoom(1., img_id, num);
  temp.src = imageArray[Index]; 
  temp.alt = altArray[Index]; 
  }
+
+ function zoom_def(img_id, select, num) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+
+ zoom(Index, img_id, num);
+ }
+ 
  </script>
 
 <style type="text/css">
@@ -94,21 +109,30 @@ width:100%;
 
 </head>
 
-<body onload="zoom_onload()" >
+<body> 
 <table border="1" class="fixed">
 <col width="50%">
 <col width="50%">
 <row height="50%">
 <row height="50%">
-
+	
 <tr> 
   <td>  
      <form id="img" name="img">
      <p>
       <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic1',0)"/>
       <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic1',0)"/>
+      <select id="datalist1" onChange="zoom_def('pic1', 'datalist1', 0)">
+	<option id="zoomfactor" value="1">
+	<option value="0.5">50%
+	<option value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+	</input>
       <text id="zoomfactor"> </text>
-       <select id="picList1" onChange="changePic('pic1','picList1')" name="picList1" >
+       <select id="picList1" onChange="changePic('pic1','picList1',0)" name="picList1" >
         <option selected="selected" value="0">cat1</option>
         <option value="1">cat2</option>
         <option value="2">cat3</option>
