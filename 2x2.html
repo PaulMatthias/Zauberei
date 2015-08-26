@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html><head><title>Testsheet</title>
+
+<script type="text/javascript">
+
+var counterArray= [[0,0,0,0],[0,0,0,0]];    //Array for resetting size onchange
+var tmp=1;
+
+function zoom(zm,img_id,num,zoomfactor) {
+ var counter;
+ //var picListArray= ["picList1", "picList2", "picList3", "picList4"];
+
+ 
+ if (zm == 0.9){
+ counterArray[num][0] = counterArray[num][0] + 1;
+  } 
+  else if (zm==1.1){
+ counterArray[num][1] = counterArray[num][1] + 1;
+ }
+ else{
+ tmp=tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1]);
+ zm=zm/tmp;
+ tmp=zm*tmp;
+ counterArray=[[0,0,0,0],[0,0,0,0]];
+ }
+ 
+ document.getElementById(zoomfactor).innerHTML = Math.round(tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+"%" ;
+
+ // zoom function for zoom buttons
+  img=document.getElementById(img_id)
+  wid=img.width
+  ht=img.height
+  img.style.width=(wid*zm)+"px"
+  img.style.height=(ht*zm)+"px"
+}
+
+
+function zoom_const(zm,img_id,num,zoomfactor) {
+ var counter;
+ //var picListArray= ["picList1", "picList2", "picList3", "picList4"];
+ 
+ document.getElementById("zoomfactor").innerHTML = Math.round(zm*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+"%" ;
+
+ // zoom function for zoom buttons
+  img=document.getElementById(img_id)
+  wid=img.width
+  ht=img.height
+  img.style.width=(wid*zm)+"px"
+  img.style.height=(ht*zm)+"px"
+}
+</script>
+
+<script type="text/javascript">
+window.onresize=getSize;
+window.onload=getSize;
+
+function getSize(){
+
+      var myWidth = 0, myHeight = 0;
+	        
+      if( typeof( window.innerWidth ) == 'number' ) {
+	             //Non-IE
+      myWidth = window.innerWidth;
+      myHeight = window.innerHeight;
+	    }
+ //     document.getElementById("bWin").innerHTML = "Fensterbreite " + myWidth + " Fensterhöhe " + myHeight;
+      return [myWidth,myHeight];
+       };
+</script>
+
+<script type="text/javascript"> 
+// function for select different images and load them onchange
+ imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
+ altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
+ function changePic(img_id, select, num, zoomfactor) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+
+ temp.src = imageArray[Index]; 
+ temp.alt = altArray[Index]; 
+ zoom(0.23, img_id, num, zoomfactor);
+// zoom_const(0.23, img_id, num, zoomfactor);
+ }
+
+ function zoom_def(img_id, select, num, zoomfactor) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+ 
+ zoom(Index, img_id, num, zoomfactor);
+ }
+
+ </script>
+
+<style type="text/css">
+html,body
+{
+  margin:5px;
+  margin-left:0px;
+  padding:0;
+  height:100%;
+  border:0;
+}
+table{
+table-layout:fixed;
+width:100%;
+}
+.fixed td { overflow: hidden; }
+img.resize{
+max-height=10%;
+max-width=10%;
+}
+</style>
+
+<style type="text/css">
+div{}
+.picture{
+overflow:scroll;
+height:500px;
+width:100%;
+}
+ button{}
+ .fix{
+  width:25px;
+ }
+</style>
+
+</head>
+
+<body> 
+
+
+
+<h4>Selection</h4>
+ <div>Welche Bilder sollen geladen werden? 
+   <select id="picList1" onChange="changePic('pic1','picList1',0, 'zoomfactor1')" name="picList1" >
+        <option>oben links</option>
+        <option value="0">cat1</option>
+        <option value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+      </select>
+    <select id="picList2" onChange="changePic('pic2','picList2',0, 'zoomfactor2')" name="picList2" >
+        <option selected="selected">oben rechts</option>
+        <option value="0">cat1</option>
+        <option value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+     </select>
+    <select id="picList3" onChange="changePic('pic3','picList3',0,'zoomfactor3')" name="picList3" >
+        <option selected="selected">unten links</option>
+        <option value="0">cat1</option>
+        <option value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+      </select>
+    <select id="picList4" onChange="changePic('pic4','picList4',0,'zoomfactor4')" name="picList4" >
+        <option selected="selected">unten rechts</option>
+        <option value="0">cat1</option>
+        <option value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+      </select>
+
+ </div>
+
+
+<a href="select.html">back to selection</a>
+
+<table border="1" class="fixed">
+<col width="50%">
+<col width="50%">
+	
+<tr> 
+  <td>  
+     <div style="height:20px;">
+      <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic1',0,'zoomfactor1')"/>
+      <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic1',0,'zoomfactor1')"/>
+      <select id="datalist1" onChange="zoom_def('pic1', 'datalist1', 0, 'zoomfactor1')">
+	<option id="zoomfactor1" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+    </div>
+    <div class="picture" id="img1">
+    <img id="pic1" alt="Katze1" name="pic1" src="cat1.jpg"></div>
+  </td>
+  
+  <td>
+     <div style="height:20px;">
+      <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic2',0,'zoomfactor2')"/>
+      <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic2',0,'zoomfactor2')"/>
+      <select id="datalist2" onChange="zoom_def('pic2', 'datalist2', 0, 'zoomfactor2')">
+	<option id="zoomfactor2" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+     </div>
+    <div class="picture" id="img2">
+    <img id="pic2" alt="Katze2" name="pic2" src="cat2.jpg"></div>
+  </td>
+</tr>
+
+<tr> 
+  <td>
+     <div style="height:20px;">
+      <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic3',0,'zoomfactor3')"/>
+      <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic3',0,'zoomfactor3')"/>
+      <select id="datalist3" onChange="zoom_def('pic3', 'datalist3', 0, 'zoomfactor3')">
+	<option id="zoomfactor3" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+    </div>
+    <div class="picture" id="img3">
+    <img id="pic3" name="pic3" alt="Katze3" src="cat3.jpeg"></div>
+  </td>
+    
+  <td>
+     <div style="height:20px;">
+      <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic4',0,'zoomfactor4')"/>
+      <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic4',0,'zoomfactor4')"/>
+      <select id="datalist4" onChange="zoom_def('pic4', 'datalist4', 0, 'zoomfactor4')">
+	<option id="zoomfactor4" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+     </div>
+    <div class="picture" id="img4">
+    <img id="pic4" name="pic4" alt="Katze4" src="cat4.jpg"></div>
+  </td>
+</tr>
+
+</table>
+
+</body></html> 

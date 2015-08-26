@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html><head><title>Testsheet</title>
+
+<script type="text/javascript">
+var counter=0;
+var counterArray= [[0,0,0,0],[0,0,0,0]];    //Array for resetting size onchange
+var tmp=1;
+
+function zoom(zm,img_id,num,zoomfactor) {
+ var counter;
+ //var picListArray= ["picList1", "picList2", "picList3", "picList4"];
+
+ 
+ if (zm == 0.9){
+ counterArray[num][0] = counterArray[num][0] + 1;
+  } 
+  else if (zm==1.1){
+ counterArray[num][1] = counterArray[num][1] + 1;
+ }
+ else{
+ tmp=tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1]);
+ zm=zm/tmp;
+ tmp=zm*tmp;
+ counterArray=[[0,0,0,0],[0,0,0,0]];
+ }
+ 
+ document.getElementById(zoomfactor).innerHTML = Math.round(tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+"%" ;
+
+ // zoom function for zoom buttons
+  img=document.getElementById(img_id)
+  wid=img.width
+  ht=img.height
+
+  //default scaling of images with factor 0.25 to fit in table
+ if(zm==1 && counter==0){
+  zm=zm*0.25
+  counter=1
+  }
+  img.style.width=(wid*zm)+"px"
+  img.style.height=(ht*zm)+"px"
+}
+</script>
+
+<script type="text/javascript">
+
+window.onresize=getSize;
+window.onload=getSize;
+
+function getSize(){
+
+      var myWidth = 0, myHeight = 0;
+	        
+      if( typeof( window.innerWidth ) == 'number' ) {
+	             //Non-IE
+      myWidth = window.innerWidth;
+      myHeight = window.innerHeight;
+	    } 
+
+ //     document.getElementById("bWin").innerHTML = "Fensterbreite " + myWidth + " Fensterhöhe " + myHeight;
+      return [myWidth,myHeight];
+       };
+</script>
+
+<script type="text/javascript"> 
+// function for select different images and load them onchange
+ imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
+ altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
+ function changePic(img_id, select, num, zoomfactor) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+ 
+// create_div(Index);
+// var image= new Image(imageArray[Index]);
+// wid=image.height;
+// hei=image.width;
+
+// document.getElementById("img1").style.width=wid;
+// document.getElementById("img1").style.height=hei;
+
+ temp.src = imageArray[Index]; 
+ temp.alt = altArray[Index];
+ zoom(1., img_id, num, zoomfactor);
+ }
+
+ function zoom_def(img_id, select, num, zoomfactor) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+
+ zoom(Index, img_id, num, zoomfactor);
+ }
+ 
+ </script>
+
+
+<style type="text/css">
+html,body
+{
+  margin:5px;
+  margin-left:0px;
+  padding:0;
+  height:100%;
+  border:0;
+}
+
+@height: `Math.round(window.innerheight/2)`;
+@width: `Math.round(window.innerwidth)`;
+
+table{
+table-layout:fixed;
+width:100%;
+
+}
+.fixed td { overflow: hidden; }
+</style>
+
+<style type="text/css">
+div{}
+.picture{
+overflow:scroll;
+margin:auto;
+height:500px;
+}
+ button{}
+ .fix{
+  width:25px;
+ }
+</style>
+
+</head>
+
+<body> 
+
+<div>Welches Bild soll links geladen werden?
+   <select id="auswahl_picl" onchange="changePic('pic1','auswahl_picl',0, 'zoomfactor1')">
+        <option selected="selected" value="0">cat1</option>
+        <option value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+   </select>
+ </div>
+
+ <div>Welches Bild soll rechts geladen werden?
+   <select id="auswahl_picr" onchange="changePic('pic2','auswahl_picr',0, 'zoomfactor2')">
+        <option value="0">cat1</option>
+        <option selected="selected" value="1">cat2</option>
+        <option value="2">cat3</option>
+        <option value="3">cat4</option>
+   </select>
+ </div>
+
+
+<a href="select.html">back to selection</a>
+
+
+<table border="1" class="fixed">
+<col width="50%">
+<col width="50%">
+	
+<tr> 
+  <td>  
+    <div style="height:20px;">
+     <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic1',0, 'zoomfactor1')"/>
+     <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic1',0,'zoomfactor1')"/>
+      <select id="datalist1" onChange="zoom_def('pic1', 'datalist1', 0, 'zoomfactor1')">
+	<option id="zoomfactor1" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+    </div>
+    <div class="picture" id="img1">
+    <img id="pic1" alt="Katze1"  name="pic1" src="cat1.jpg"></div>
+  </td>
+  
+  <td> 
+    <input type="button" class="fix" value ="-" onclick="zoom(0.9,'pic2',0, 'zoomfactor2')"/>
+    <input type="button" class="fix" value ="+" onclick="zoom(1.1,'pic2',0, 'zoomfactor2')"/>
+     <select id="datalist2" onChange="zoom_def('pic2', 'datalist2', 0, 'zoomfactor2')">
+	<option id="zoomfactor2" value="1">
+	<option value="0.5">50%
+	<option selected="selected" value="1">100%
+	<option value="1.5">150%
+	<option value="2">200%
+	<option value="4">400%
+      </select>
+      
+    <div class="picture">
+    <img id="pic2" alt="Katze2"  name="pic2" src="cat2.jpg"></div>
+  </td>
+</tr>
+</table>
+</body>
+</html> 

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html><head><title>Testsheet</title>
+
+<script type="text/javascript">
+
+var counterArray= [[0,0,0,0],[0,0,0,0]];    //Array for resetting size onchange
+var tmp=1, tmp2=1;
+
+function zoom(zm,img_id,num) {
+ var counter;
+ //var picListArray= ["picList1", "picList2", "picList3", "picList4"];
+
+ 
+ if (zm == 0.9){
+ counterArray[num][0] = counterArray[num][0] + 1;
+  } 
+  else if (zm==1.1){
+ counterArray[num][1] = counterArray[num][1] + 1;
+ }
+ else{
+ tmp=tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1]);
+ zm=zm/tmp;
+ tmp=zm*tmp;
+ counterArray=[[0,0,0,0],[0,0,0,0]];
+ }
+ 
+ document.getElementById("zoomfactor").innerHTML = Math.round(tmp*Math.pow(0.9,counterArray[num][0])*Math.pow(1.1,counterArray[num][1])*100)+"%" ;
+
+ // zoom function for zoom buttons
+  img=document.getElementById(img_id)
+  wid=img.width
+  ht=img.height
+  img.style.width=(wid*zm)+"px"
+  img.style.height=(ht*zm)+"px"
+}
+</script>
+
+<script type="text/javascript">
+window.onresize=getSize;
+window.onload=getSize;
+
+function getSize(){
+
+      var myWidth = 0, myHeight = 0;
+	        
+      if( typeof( window.innerWidth ) == 'number' ) {
+	             //Non-IE
+      myWidth = window.innerWidth;
+      myHeight = window.innerHeight;
+	    }
+ //     document.getElementById("bWin").innerHTML = "Fensterbreite " + myWidth + " Fensterhöhe " + myHeight;
+      return [myWidth,myHeight];
+       };
+</script>
+
+<script type="text/javascript"> 
+// function for select different images and load them onchange
+ imageArray = ["cat1.jpg", "cat2.jpg", "cat3.jpeg", "cat4.jpg"]; 
+ altArray = ["Katze1", "Katze2", "Katze3", "Katze4"]; 
+ function changePic(img_id, select, num) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+
+ zoom(1., img_id, num);
+ temp.src = imageArray[Index]; 
+ temp.alt = altArray[Index]; 
+ }
+
+ function zoom_def(img_id, select, num) { 
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ var temp = document.getElementById(img_id);
+
+ zoom(Index, img_id, num);
+ }
+ 
+function changeTable(select){
+
+ var sel= document.getElementById(select);
+ var Index = sel.options[sel.selectedIndex].value; 
+ window.open(Index+'.html', "_self");
+}
+ </script>
+
+<style type="text/css">
+html,body
+{
+  margin:5px;
+  margin-left:0px;
+  padding:0;
+  height:100%;
+  border:0;
+}
+table{
+table-layout:fixed;
+width:100%;
+}
+.fixed td { overflow: hidden; }
+</style>
+
+<style type="text/css">
+div{}
+.picture{
+overflow:scroll;
+height:500px;
+width:100%;
+}
+ button{}
+ .fix{
+  width:25px;
+ }
+</style>
+
+</head>
+
+<body> 
+
+
+
+<h4>Selection</h4>
+<div> Welche Form von Tabelle soll geladen werden? 
+  <select id ="auswahl_tab" onchange="changeTable('auswahl_tab')">
+    <option>rows x columns</option>
+    <option value="2x1">1x2</option>
+    <option value="2x2">2x2</option>
+  </select>
+ </div>
+
+</body></html> 

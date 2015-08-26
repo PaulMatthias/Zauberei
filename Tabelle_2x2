@@ -94,7 +94,11 @@ width:100%;
 
 </head>
 
+
+
+
 <body onload="zoom_onload()" >
+  <a href="test2.html" target="_blank">mit zoom</a>
 <table border="1" class="fixed">
 <col width="50%">
 <col width="50%">
